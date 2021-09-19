@@ -14,9 +14,10 @@ BitMap::BitMap(size_t size) {
 }
 
 BitMap::BitMap(const BitMap &__v) {
-    size_t wordCount = (size % __bits_per_word == 0) ? (size / __bits_per_word) : (size / __bits_per_word + 1);
+    size_t wordCount = (__v.size % __bits_per_word == 0) ? (__v.size / __bits_per_word) : (__v.size / __bits_per_word +
+                                                                                           1);
     this->__bitmap_ = std::make_shared<__storage_type>(wordCount);
-    this->size = size;
+    this->size = __v.size;
     for (auto i = 0; i < wordCount; i++) {
         __bitmap_.get()[i] = __v.__bitmap_.get()[i];
     }
@@ -40,19 +41,40 @@ BitMap::reference BitMap::operator[](size_t pos) {
 }
 
 void BitMap::operator&=(const BitMap &__v) {
-    size_equal_check(__v);
-    size_t wordCount = _word_count();
-    for (auto i = 0; i < wordCount; i++) {
-        __bitmap_.get()[i] &= __v.__bitmap_.get()[i];
+    if (__v.size >= size) {
+        size_t wordCount = _word_count();
+        for (auto i = 0; i < wordCount; i++) {
+            __bitmap_.get()[i] &= __v.__bitmap_.get()[i];
+        }
+    } else {
+        size_t wordCount = (__v.size / __bits_per_word);
+        for (auto i = 0; i < wordCount; i++) {
+            __bitmap_.get()[i] &= __v.__bitmap_.get()[i];
+        }
+        size_t extraBitCount = __v.size % __bits_per_word;
+        for (auto i = wordCount * __bits_per_word; i < wordCount * __bits_per_word + extraBitCount; i++) {
+            this->operator[](i) = this->operator[](i) & __v[i];
+        }
     }
 }
 
 void BitMap::operator|=(const BitMap &__v) {
-    size_equal_check(__v);
-    size_t wordCount = _word_count();
-    for (auto i = 0; i < wordCount; i++) {
-        __bitmap_.get()[i] |= __v.__bitmap_.get()[i];
+    if (__v.size >= size) {
+        size_t wordCount = _word_count();
+        for (auto i = 0; i < wordCount; i++) {
+            __bitmap_.get()[i] |= __v.__bitmap_.get()[i];
+        }
+    } else {
+        size_t wordCount = (__v.size / __bits_per_word);
+        for (auto i = 0; i < wordCount; i++) {
+            __bitmap_.get()[i] &= __v.__bitmap_.get()[i];
+        }
+        size_t extraBitCount = __v.size % __bits_per_word;
+        for (auto i = wordCount * __bits_per_word; i < wordCount * __bits_per_word + extraBitCount; i++) {
+            this->operator[](i) = this->operator[](i) | __v[i];
+        }
     }
+
 }
 
 void BitMap::flip() {

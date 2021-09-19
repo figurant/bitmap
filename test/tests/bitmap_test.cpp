@@ -5,7 +5,7 @@ namespace {
     class BitMapTestClass : public testing::Test {
     public:
         BitMap test_bitmap_1 = BitMap(20);
-        BitMap test_bitmap_2 = BitMap(20);
+        BitMap test_bitmap_2 = BitMap(18);
     };
 }
 
@@ -63,7 +63,7 @@ TEST_F(BitMapTestClass, Test_MapEqual) {
     test_bitmap_2[10] = 1;
     ASSERT_EQ(test_bitmap_1 == test_bitmap_2, false);
     test_bitmap_2[8] = 1;
-    ASSERT_EQ(test_bitmap_1 == test_bitmap_2, true);
+    ASSERT_EQ(test_bitmap_1 == test_bitmap_2, false);
 }
 
 int main(int argc, char *argv[]) {
