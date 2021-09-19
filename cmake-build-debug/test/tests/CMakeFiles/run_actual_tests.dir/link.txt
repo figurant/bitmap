@@ -1,0 +1,1 @@
+/Library/Developer/CommandLineTools/usr/bin/c++ -g -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk -Wl,-search_paths_first -Wl,-headerpad_max_install_names CMakeFiles/run_actual_tests.dir/bitmap_test.cpp.o CMakeFiles/run_actual_tests.dir/__/__/source/BitMap.cpp.o -o run_actual_tests  ../../lib/libgtestd.a ../../lib/libgtest_maind.a ../../lib/libgtestd.a 

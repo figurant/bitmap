@@ -1,0 +1,24 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/Users/zhuwei/CLionProjects/bitmap/main.cpp
+iostream
+-
+
+/Users/zhuwei/CLionProjects/bitmap/source/BitMap.cpp
+BitMap.h
+/Users/zhuwei/CLionProjects/bitmap/source/BitMap.h
+
+/Users/zhuwei/CLionProjects/bitmap/source/BitMap.h
+cstdlib
+-
+__bit_reference
+-
+climits
+-
+
