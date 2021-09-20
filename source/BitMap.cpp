@@ -67,7 +67,7 @@ void BitMap::operator|=(const BitMap &__v) {
     } else {
         size_t wordCount = (__v.size / __bits_per_word);
         for (auto i = 0; i < wordCount; i++) {
-            __bitmap_.get()[i] &= __v.__bitmap_.get()[i];
+            __bitmap_.get()[i] |= __v.__bitmap_.get()[i];
         }
         size_t extraBitCount = __v.size % __bits_per_word;
         for (auto i = wordCount * __bits_per_word; i < wordCount * __bits_per_word + extraBitCount; i++) {
